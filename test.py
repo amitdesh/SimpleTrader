@@ -11,7 +11,8 @@ api_url = f"https://www.alphavantage.co/query?function=OVERVIEW&symbol={symbol}&
 # print(api_url)
 
 data = requests.get(api_url).json()
-print(data)
+# print(data)
 
-# price = data["Time Series (Daily)"]['2020-12-08']
-# print(price)
+my_columns = ["Ticker", "Stock Price", "Market Cap", "ForwardPE"]
+output_dataframe = pd.DataFrame(columns=my_columns)
+print(output_dataframe)

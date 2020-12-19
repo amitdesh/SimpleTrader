@@ -51,3 +51,17 @@ def chunks(lst, n):
     #     print(symbol_strings[i])
     my_columns = ['Ticker', 'Price',
                   'One-Year Price Return', 'Number of Shares to Buy']
+
+
+symbol_groups = list(chunks(stocks['Ticker'], 100))
+symbol_strings = []
+for i in range(0, len(symbol_groups)):
+    symbol_strings.append(','.join(symbol_groups[i]))
+#     print(symbol_strings[i])
+
+final_dataframe = pd.DataFrame(columns=my_columns)
+
+for symbol_string in symbol_strings:
+    #     print(symbol_strings)
+    batch_api_call_url = f"https://www.alphavantage.co/batch/query?function=OVERVIEW&symbol={symbol}&interval=15min&slice=year1month1&apikey={config.api_key}"
+    data = requests.get(batch_api_call_url).json()
